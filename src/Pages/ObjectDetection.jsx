@@ -14,7 +14,7 @@ const ObjectDetection  = () => {
     <WebcamCapture />
 
     <div className='bg-slate-800'>
-           <h2>Entries</h2>
+           <h2>Entrie</h2> 
            <div className='bg-red-500'>
             <h3>{phd.title}</h3>
             <h3>{phd.id}</h3>
