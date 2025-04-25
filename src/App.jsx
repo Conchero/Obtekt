@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 import WebcamCapture from './WebcamComponent'
+import ObjectDetectionTest from './ObjDetectionTest'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,6 +15,7 @@ function App() {
     Hello world!
   </h1>
   <WebcamCapture />
+  <ObjectDetectionTest />
     </>
   )
 }
