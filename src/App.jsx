@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import WebcamCapture from "./WebcamComponent";
 import Home from "./Pages/Home";
 import ObjectDetection from "./Pages/ObjectDetection";
+import WelcomePage from "./Pages/WelcomePage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -13,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<WelcomePage />} />
         <Route path="/object-detection" element={<ObjectDetection />} />
       </Routes>
     </BrowserRouter>
