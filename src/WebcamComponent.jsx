@@ -1,11 +1,23 @@
 import { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
+import { MathBackendCPU } from "@tensorflow/tfjs-backend-cpu";
+import * as cocoSsd from "@tensorflow-models/coco-ssd";
+import { MathBackendWebGL } from "@tensorflow/tfjs-backend-webgl";
 
 const WebcamCapture = () => {
   const webcamRef = useRef(null);
   const [entry, setEntry] = useState();
   const [entries, setEntries] = useState([]);
 
+   
+  const getPrediction = async () => {
+    const liveFeed = document.querySelector("video");
+    const model = await cocoSsd.load();
+    const prediction  = await model.detect(liveFeed);
+
+    console.log("Prediction: ")
+    console.log(prediction);
+  }
   // SIMULATION DE LA DETECTION DE L'OBJET
   // AVEC LES INFOS DE L'OBJET STOCKEES DANS UN OBJET ENTRY
   const captureEntry = () => {
@@ -47,6 +59,7 @@ const WebcamCapture = () => {
       <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
       <button onClick={captureEntry}>Capture infos</button>
       <button onClick={saveEntryToLocalStorage}>Save to LocalStorage</button>
+      <button onClick={getPrediction}>Detect Objects</button>
 
       {entries.map((entry) => (
         <div>
