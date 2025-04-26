@@ -1,4 +1,4 @@
-import WebcamCapture from '../WebcamComponent';
+import WebcamCapture from '../ObjectDetectionSystem/WebcamComponent';
 const ObjectDetection  = (props) => {
 
     const phd = {
