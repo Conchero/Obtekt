@@ -1,13 +1,20 @@
-import React, { useState, useRef } from 'react';
+import React, { useState,useEffect, useRef } from 'react';
 
-const WelcomePage = () => {
+const WelcomePage = (props) => {
   const [streaming, setStreaming] = useState(false);
   const videoRef = useRef(null);
+
+  useEffect(() => {
+    setStreaming(false);
+    videoRef.current = null;
+  }, [])
+
 
   const handleActivateWebcam = async () => {
     if (!streaming) {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        props.setCamActivated(true);
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
           setStreaming(true);

@@ -1,6 +1,5 @@
-import {Link} from 'react-router-dom';
 import WebcamCapture from '../WebcamComponent';
-const ObjectDetection  = () => {
+const ObjectDetection  = (props) => {
 
     const phd = {
         title: "pizza",
@@ -33,10 +32,11 @@ const ObjectDetection  = () => {
             <div className='bg-red-500'>
             <h3>{phd.title}</h3>
             <h3>{phd.id}</h3>
-            </div> 
+            </div>
     </div>
 
-    <Link to="/"><button>Disconnect</button></Link>
+
+    <button onClick={() => props.setCamActivated(false)}>Barrez vous</button>
 
     </>
 }
