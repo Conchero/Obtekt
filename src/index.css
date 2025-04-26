@@ -1,0 +1,10 @@
+button {
+  background: grey;
+  padding: 1rem;
+  margin-right: 20px;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+}
