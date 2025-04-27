@@ -40,7 +40,7 @@ const WelcomePage = (props) => {
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
             Welcome to <span className="text-green-500">Obtekt</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl">
+          <p className="text-lg md:text-xl text-gray-100 mb-8 max-w-2xl p-6 rounded-lg shadow-lg bg-black/40">
             Obtekt allows users to recognize objects in real time using their
             device’s camera. Simply open the app, point the camera at an object,
             and voilà! ;
