@@ -3,31 +3,71 @@ import { MathBackendCPU } from "@tensorflow/tfjs-backend-cpu";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import { MathBackendWebGL } from "@tensorflow/tfjs-backend-webgl";
 import { useEffect } from "react";
+import { useState } from "react";
 
 const PredictionManagement = (props) => {
 
-  useEffect(()=>{
-    if (props.requestAsked)
-    {
+  const [previousPrediction, setPreviousPrediction] = useState(null);
+  const [currentPrediction, setCurrentPrediction] = useState(null);
+
+  useEffect(() => {
+    if (props.requestAsked) {
       getPrediction();
     }
-  },[props.requestAsked])
+  }, [props.requestAsked])
 
   const getPrediction = async () => {
     const liveFeed = document.querySelector("video");
     const model = await cocoSsd.load();
     const prediction = await model.detect(liveFeed);
 
+    let predictionToReturn = null;
     if (prediction.length > 0) {
       const predictionWithoutPerson = prediction.filter((el) => el.class != "person");
-      props.onRequestTreated();
-      return await predictionWithoutPerson;
+      if (predictionWithoutPerson.length > 0)
+        predictionToReturn = predictionWithoutPerson;
     }
-    else {
-      props.onRequestTreated();
-      return null;
-    }
+
+
+    setPreviousPrediction(currentPrediction);
+    setCurrentPrediction(predictionToReturn);
+
+    props.onRequestTreated(getDetectionState());
+    return predictionToReturn;
   }
+
+
+  const getDetectionState = () => {
+    let state = "";
+    if (!currentPrediction && !previousPrediction) {
+      state = "DEFAULT"
+    }
+    else if (currentPrediction && !previousPrediction) {
+      state = "OBJECT_ENTERED_DETECTION"
+    }
+    else if (!currentPrediction && previousPrediction) {
+      state = "OBJECT_LEAVED_DETECTION"
+    }
+    else if (currentPrediction && previousPrediction) {
+      let subState = "";
+      if (currentPrediction.length === previousPrediction.length) {
+        currentPrediction.forEach((el, i) => {
+          if (el.class !== previousPrediction[i].class) {
+            subState = "DIFFERENT_DETECTION";
+            return;
+          }
+          subState = "SAME_DETECTION"
+        })
+      }
+      else {
+        subState = "DIFFERENT_DETECTION";
+      }
+      state = subState;
+    }
+    
+    return state;
+  }
+
 
   return (
     <>

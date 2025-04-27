@@ -18,7 +18,9 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
     setSendRequest(true);
   }
 
-  const RestartTimer = () =>{
+  const RestartTimer = (_detectionState) =>{
+
+    console.log(_detectionState);
     setSendRequest(false);
   }
  
