@@ -3,7 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import WebcamCapture from "./WebcamComponent";
+import WebcamCapture from "./ObjectDetectionSystem/WebcamComponent";
 import PageManager from "./Pages/PageManager";
 
 
