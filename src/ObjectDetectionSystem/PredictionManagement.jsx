@@ -2,59 +2,40 @@ import React from "react"
 import { MathBackendCPU } from "@tensorflow/tfjs-backend-cpu";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import { MathBackendWebGL } from "@tensorflow/tfjs-backend-webgl";
+import { useEffect } from "react";
 
+const PredictionManagement = (props) => {
 
-class PredictionManagement {
+  useEffect(()=>{
+    if (props.requestAsked)
+    {
+      getPrediction();
+    }
+  },[props.requestAsked])
 
-  #nbPromisePending = 0;
-  #currentPrediction = null;
-  #previousPrediction = null;
+  const getPrediction = async () => {
+    const liveFeed = document.querySelector("video");
+    const model = await cocoSsd.load();
+    const prediction = await model.detect(liveFeed);
 
-
-  HandleNewPrediction(_prediction) {
-    if (this.#previousPrediction == null) {
+    if (prediction.length > 0) {
+      const predictionWithoutPerson = prediction.filter((el) => el.class != "person");
+      props.onRequestTreated();
+      return await predictionWithoutPerson;
     }
     else {
-
+      props.onRequestTreated();
+      return null;
     }
-
-
-    this.#previousPrediction = this.#currentPrediction;
-    this.#currentPrediction = _prediction;
-    console.log("PreviousPrediction = ", this.#previousPrediction);
-    console.log("CurrentPrediction = ", this.#currentPrediction);
   }
 
-  SetNbPromisePending(_v) {
-    this.#nbPromisePending = _v;
-  }
+  return (
+    <>
 
-  GetNbPromisePending() {
-    return this.#nbPromisePending;
-  }
-
-
-  static getPrediction = async (_detectionObject) => {
-
-    if (_detectionObject.GetNbPromisePending() < 2) {
-      _detectionObject.SetNbPromisePending(_detectionObject.GetNbPromisePending() + 1);
-      const liveFeed = document.querySelector("video");
-      const model = await cocoSsd.load();
-      const prediction = await model.detect(liveFeed);
-      _detectionObject.SetNbPromisePending(_detectionObject.GetNbPromisePending() + 1);
-
-      if (prediction.length > 0) {
-        const predictionWithoutPerson = prediction.filter((el) => el.class != "person");
-        return await predictionWithoutPerson;
-      }
-      else {
-        return null;
-      }
-
-    }
-  };
-
-
+    </>
+  )
 };
 
 export default PredictionManagement;
+
+

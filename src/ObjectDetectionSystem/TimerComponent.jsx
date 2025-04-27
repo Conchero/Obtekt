@@ -9,9 +9,8 @@ const TimerComponent = (props) => {
     const [now, setNow] = useState(null);
     const intervalRef = useRef(null);
     let detectionTimer = 0.0;
-    const detectionTriggerValue = 4.0;
+    const detectionTriggerValue = 3.0;
 
-    const objectDetectionObject = new PredictionManagement();
 
     useEffect(() => {
         startDetectionTimer();
@@ -27,22 +26,20 @@ const TimerComponent = (props) => {
 
     const timerUpdate = async () => {
         if (startTime != null && now != null) {
-            // if ((now - startTime) / 1000 < parseFloat(detectionTriggerValue))
-            // {
-            //     detectionTimer = (now - startTime) / 1000;
-            // }
-            if (objectDetectionObject.GetNbPromisePending() == 0) {
-                if ((now - startTime) / 1000 >= detectionTriggerValue) {
-                    startDetectionTimer();
-                    objectDetectionObject.HandleNewPrediction(await PredictionManagement.getPrediction(objectDetectionObject));
+            detectionTimer = (now - startTime) / 1000;
 
-                }
+            if (detectionTimer >= detectionTriggerValue) {
+                startDetectionTimer();
+                props.onTimerTriggerReached();
             }
         }
     }
 
 
-    timerUpdate();
+    if (!props.requestPending)
+    {
+        timerUpdate();
+    }
     return (
         <>
             <h3>{detectionTimer}</h3>

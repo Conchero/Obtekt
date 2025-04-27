@@ -8,12 +8,19 @@ import PredictionManagement from "./PredictionManagement";
 const WebcamCapture = ({ entry, setEntry, setEntries }) => {
   const webcamRef = useRef(null);
 
+  const [sendRequest, setSendRequest] = useState(false);
 
   useEffect(() => {
   }, [])
 
 
+  const SendRequestToPredictionManagement = () => {
+    setSendRequest(true);
+  }
 
+  const RestartTimer = () =>{
+    setSendRequest(false);
+  }
  
   /////////////////////////////////////////////////////////
   ////// Partie fictive pour faire marcher ma partie //////
@@ -35,7 +42,8 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
       <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
       <button onClick={captureEntry}>Capture infos</button>
       <DetectedEntryCard entry={entry} setEntries={setEntries} />
-      <TimerComponent />
+      <TimerComponent onTimerTriggerReached={SendRequestToPredictionManagement} requestPending={sendRequest} />
+      <PredictionManagement onRequestTreated={RestartTimer} requestAsked={sendRequest} />
     </div>
 
   );
