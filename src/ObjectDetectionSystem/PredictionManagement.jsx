@@ -9,3 +9,6 @@ const PredictionManagement = (props) => {
 };
 
 export default PredictionManagement;
+
+
+

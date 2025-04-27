@@ -43,3 +43,5 @@ const ObjectDetection  = (props) => {
 
 
 export default ObjectDetection;
+
+
