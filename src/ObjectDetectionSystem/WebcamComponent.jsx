@@ -18,13 +18,27 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
   const fillNewEntry = (_prediction) => {
     const newEntries = [];
 
+    // Récupération de l'image croppée
+    
+    
     _prediction.forEach(el => {
-
+      
+      const canvas = webcamRef.current.getCanvas();
+      const { bbox } = el;
+      const [x, y, width, height] = bbox;
+      const croppedCanvas = document.createElement("canvas");
+      croppedCanvas.width = width;
+      croppedCanvas.height = height;
+      const ctx = croppedCanvas.getContext("2d");
+      ctx.drawImage(canvas, x, y, width, height, 0, 0, width, height);
+  
+      const croppedScreenshot = croppedCanvas.toDataURL("image/jpeg")
+      
       const tempEntry = {
         id: Math.random().toString(36).slice(2, 11),
         objectName: el.class,
         accuracyPercent: el.score,
-        screenshot: webcamRef.current.getScreenshot(),
+        screenshot: croppedScreenshot,
       };
 
       newEntries.push(tempEntry);
