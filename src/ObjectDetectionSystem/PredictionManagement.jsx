@@ -7,16 +7,10 @@ import { useState } from "react";
 
 const PredictionManagement = (props) => {
 
+  const [previousPrediction, setPreviousPrediction] = useState(null);
   const [currentPrediction, setCurrentPrediction] = useState(null);
-  const [model, setModel] = useState(null);
 
-  useEffect(() => {
-    loadCocoModel();
-  },[])
 
-  const loadCocoModel = async () => {
-    setModel(await cocoSsd.load());
-  }
 
   useEffect(() => {
     if (props.requestAsked) {
@@ -29,6 +23,7 @@ const PredictionManagement = (props) => {
   const getPrediction = async () => {
     try {
       const liveFeed = document.querySelector("video");
+      const model = await cocoSsd.load();
       const prediction = await model.detect(liveFeed);
 
       let predictionToReturn = null;
