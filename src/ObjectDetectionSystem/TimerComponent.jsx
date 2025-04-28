@@ -8,7 +8,7 @@ const TimerComponent = (props) => {
     const [now, setNow] = useState(null);
     const intervalRef = useRef(null);
     let detectionTimer = 0.0;
-    const detectionTriggerValue = 2.5;
+    const detectionTriggerValue = 1.5;
 
 
     useEffect(() => {

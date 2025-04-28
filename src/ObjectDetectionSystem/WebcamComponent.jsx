@@ -81,29 +81,6 @@ const WebcamCapture = ({ setEntries }) => {
     setPredictionsToShow(predictionsToShow.filter((el) => el.id != id));
   };
 
-  // const captureEntry = () => {
-  //   if (predictions.length === 0) {
-  //     alert("No prediction available");
-  //     return;
-  //   }
-
-  //   // Récupération de l'image croppée
-  //   const canvas = webcamRef.current.getCanvas();
-  //   const firstPrediction = predictions[0]; // Par contre je prends que le premier objet détecté, si y en a plusieurs toz
-  //   const { bbox, class: objectName, score } = firstPrediction;
-  //   const [x, y, width, height] = bbox;
-  //   const croppedCanvas = document.createElement("canvas");
-  //   croppedCanvas.width = width;
-  //   croppedCanvas.height = height;
-  //   const ctx = croppedCanvas.getContext("2d");
-  //   ctx.drawImage(canvas, x, y, width, height, 0, 0, width, height);
-
-  //   const screenshot = croppedCanvas.toDataURL("image/jpeg");
-  //   const id = Math.random().toString(36).slice(2, 11);
-  //   const accuracyPercent = `${(score * 100).toFixed()}%`;
-
-  //   setEntry({ id, objectName, accuracyPercent, screenshot });
-  // };
 
   return (
     <div className="relative flex flex-col h-full items-center">
