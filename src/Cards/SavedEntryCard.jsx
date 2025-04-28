@@ -1,4 +1,5 @@
 import React from "react";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,61 +18,23 @@ const SavedEntryCard = ({ entry, deleteEntryFromLocalStorage }) => {
     // </div>
 
     <div className="container flex bg-[#1B1B1B] text-[#888888] border">
-      <a  href={entry.screenshot} download={`screenshot-${entry.id}.jpg`}>
-      <div className={` border-red img__container bg-cover bg-center w-25 h-25 bg-stone-50`} style={{ backgroundImage: `url(${entry.screenshot})` }}>
-      </div>
+      <a href={entry.screenshot} download={`screenshot-${entry.id}.jpg`}>
+        <div className={` border-red img__container bg-cover bg-center w-25 h-25 bg-stone-50`} style={{ backgroundImage: `url(${entry.screenshot})` }}>
+        </div>
       </a>
       <div className=" px-4 ux__container w-[100%] border flex  items-center justify-between">
-      <div className="info__container">
-          <h3 className=" text-center rounded-2xl border-2 px-2 py-1 text-[12px]">{`${(entry.accuracyPercent*100).toFixed(0)}% accuracy`}</h3>
+        <div className="info__container">
+          <h3 className=" text-center rounded-2xl border-2 px-2 py-1 text-[12px]">{`${(entry.accuracyPercent * 100).toFixed(0)}% accuracy`}</h3>
           <div className="flex gap-2 items-center justify-evenly">
             <h3 className="text-[#FFFFFF] text-[20px] font-bold">{entry.objectName}</h3>
             <h3 className="text-[16px] font-semibold">{entry.id}</h3>
           </div>
         </div>
-      <FontAwesomeIcon className="hover:text-[#DB0004]" icon={faTrash} />
+        <FontAwesomeIcon className="hover:text-[#DB0004]" icon={faTrash} />
       </div>
+
     </div>
   );
 };
 
 export default SavedEntryCard;
-
-
-
-
-
-// import React from 'react';
-// import { FiTrash2 } from 'react-icons/fi'; // icône poubelle
-
-// const SavedEntryCard = ({ imageUrl, accuracy, name, id, onDelete }) => {
-//   return (
-//     <div className="bg-gray-800 p-3 rounded-lg flex items-center gap-4 mb-4">
-
-//       {/* Gauche : Image + Textes */}
-//       <div className="flex items-center gap-3 flex-1">
-        
-//         {/* Image */}
-//         <div className="w-14 h-14">
-//           <img src={imageUrl} alt={name} className="w-full h-full object-cover rounded" />
-//         </div>
-
-//         {/* Infos Texte */}
-//         <div className="flex flex-col">
-//           <span className="text-green-400 text-sm">{accuracy}% accuracy</span>
-//           <span className="text-white font-semibold">{name}</span>
-//           <span className="text-gray-400 text-xs">ID {id}</span>
-//         </div>
-
-//       </div>
-
-//       {/* Droite : bouton delete */}
-//       <button onClick={onDelete} className="text-red-500 hover:text-red-700">
-//         <FiTrash2 size={20} />
-//       </button>
-
-//     </div>
-//   );
-// };
-
-// export default SavedEntryCard;
