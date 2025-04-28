@@ -2,6 +2,8 @@ import React from "react";
 import SavedEntryCard from "../Cards/SavedEntryCard";
 
 const EntryManager = ({ entries, setEntries }) => {
+
+
   const deleteEntryFromLocalStorage = (entryId) => {
     const existingEntries = JSON.parse(localStorage.getItem("entries")) || [];
     const updatedEntries = existingEntries.filter(

@@ -45,7 +45,7 @@ const SavedEntryCard = ({ entry, deleteEntryFromLocalStorage }) => {
           </div>
         </div>
         <div className="group flex justify-center items-center w-[40px] h-[40px] hover:bg-[#2F2F2F] transition mr-[16px] rounded-[8px] cursor-pointer">
-          <FiTrash2 className="text-[24px] group-hover:text-[#DB0004] transition" />
+          <FiTrash2 className="text-[24px] group-hover:text-[#DB0004] transition"  onClick={() => deleteEntryFromLocalStorage(entry.id)} />
         </div>
       </div>
     </div>

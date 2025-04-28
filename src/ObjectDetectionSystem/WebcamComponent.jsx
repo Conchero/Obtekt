@@ -18,23 +18,32 @@ const WebcamCapture = ({setEntries}) => {
 
     _prediction.forEach(el => {
 
-      // Récupération de l'image croppée
-      const canvas = webcamRef.current.getCanvas();
-      const { bbox } = el;
-      const [x, y, width, height] = bbox;
-      const croppedCanvas = document.createElement("canvas");
-      croppedCanvas.width = width;
-      croppedCanvas.height = height;
-      const ctx = croppedCanvas.getContext("2d");
-      ctx.drawImage(canvas, x, y, width, height, 0, 0, width, height);
+      // // Récupération de l'image croppée
+      // const canvas = webcamRef.current.getCanvas();
+      // const { bbox } = el;
+      // const [x, y, width, height] = bbox;
+      // const croppedCanvas = document.createElement("canvas");
+      // croppedCanvas.width = width;
+      // croppedCanvas.height = height;
+      // const ctx = croppedCanvas.getContext("2d");
+      // ctx.drawImage(canvas, x, y, width, height, 0, 0, width, height);
 
-      const croppedScreenshot = croppedCanvas.toDataURL("image/jpeg")
+      // const croppedScreenshot = croppedCanvas.toDataURL("image/jpeg")
+
+
+      const date = new Date(Date.now());
+
+      const yearID = date.getFullYear().toString().charAt(date.getFullYear().toString().length-2) + date.getFullYear().toString().charAt(date.getFullYear().toString().length-1);
+      const id = `D-${yearID}-${date.getMonth()}-${date.getHours()}${date.getMinutes()}${date.getSeconds()+date.getMilliseconds()}`;
+
+
+      console.log(id)
 
       const tempEntry = {
-        id: Math.random().toString(36).slice(2, 11),
+        id: id,
         objectName: el.class,
         accuracyPercent: el.score,
-        screenshot: croppedScreenshot,
+        screenshot:  webcamRef.current.getScreenshot(),
       };
 
       newEntries.push(tempEntry);
