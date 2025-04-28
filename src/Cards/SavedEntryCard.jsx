@@ -1,5 +1,6 @@
 import React from "react";
 import { FiTrash2 } from "react-icons/fi";
+import { RiDownload2Line } from "react-icons/ri";
 
 const SavedEntryCard = ({ entry, deleteEntryFromLocalStorage }) => {
   return (
@@ -16,7 +17,14 @@ const SavedEntryCard = ({ entry, deleteEntryFromLocalStorage }) => {
     // </div>
 
     <div className="container flex bg-[#1B1B1B] text-[#888888] rounded-[16px] overflow-hidden">
-      <a href={entry.screenshot} download={`screenshot-${entry.id}.jpg`}>
+      <a
+        href={entry.screenshot}
+        download={`screenshot-${entry.id}.jpg`}
+        className="group relative"
+      >
+        <div className="absolute hidden group-hover:block group-hover:bg-black/75 group-hover:w-full group-hover:h-full group-hover:flex group-hover:justify-center group-hover:items-center">
+          <RiDownload2Line className="text-[24px] text-white" />
+        </div>
         <div
           className={`img__container bg-cover bg-center w-[72px] h-full bg-stone-50`}
           style={{ backgroundImage: `url(${entry.screenshot})` }}
@@ -36,8 +44,8 @@ const SavedEntryCard = ({ entry, deleteEntryFromLocalStorage }) => {
             <h3 className="text-[16px] font-semibold">ID {entry.id}</h3>
           </div>
         </div>
-        <div className="group flex justify-center items-center w-[40px] h-[40px] bg-transparent hover:bg-[#2F2F2F] transition mr-[16px] rounded-[8px]">
-          <FiTrash2 className="text-[24px] group-hover:text-[#DB0004] transition cursor-pointer" />
+        <div className="group flex justify-center items-center w-[40px] h-[40px] hover:bg-[#2F2F2F] transition mr-[16px] rounded-[8px] cursor-pointer">
+          <FiTrash2 className="text-[24px] group-hover:text-[#DB0004] transition" />
         </div>
       </div>
     </div>

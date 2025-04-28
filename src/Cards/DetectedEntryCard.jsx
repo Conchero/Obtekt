@@ -40,7 +40,7 @@ const DetectedEntryCard = ({
           Save it
         </button>
         <button
-          className="text-[20px] font-semibold  bg-white rounded-[12px] hover:bg-[#1B1B1B] text-[#1B1B1B]  hover:text-[ hover:text-white transition p-2 cursor-pointer"
+          className="text-[20px] font-semibold  bg-[#1B1B1B] rounded-[12px] hover:bg-white text-white  hover:text-[ hover:text-[#1B1B1B] transition p-2 cursor-pointer"
           onClick={(e) => {
             removePredictionToShow(prediction.id);
           }}
