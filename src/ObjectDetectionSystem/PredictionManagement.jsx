@@ -22,7 +22,6 @@ const PredictionManagement = (props) => {
     if (props.requestAsked) {
       getPrediction();
     }
-    console.log("oui");
   }, [props.requestAsked])
 
 
