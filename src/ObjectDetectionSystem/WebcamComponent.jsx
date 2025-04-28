@@ -15,12 +15,31 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
   const fillNewEntry = (_prediction) => {
     const newEntries = [];
 
-    _prediction.forEach((el) => {
+    //<<<<<<< HEAD
+
+
+    _prediction.forEach(el => {
+
+      // Récupération de l'image croppée
+      const canvas = webcamRef.current.getCanvas();
+      const { bbox } = el;
+      const [x, y, width, height] = bbox;
+      const croppedCanvas = document.createElement("canvas");
+      croppedCanvas.width = width;
+      croppedCanvas.height = height;
+      const ctx = croppedCanvas.getContext("2d");
+      ctx.drawImage(canvas, x, y, width, height, 0, 0, width, height);
+
+      const croppedScreenshot = croppedCanvas.toDataURL("image/jpeg")
+
+      // =======
+      //     _prediction.forEach((el) => {
+      // >>>>>>> d96b867636f938bf191747305be7030ad1612ede
       const tempEntry = {
         id: Math.random().toString(36).slice(2, 11),
         objectName: el.class,
         accuracyPercent: el.score,
-        screenshot: webcamRef.current.getScreenshot(),
+        screenshot: croppedScreenshot,
       };
 
       newEntries.push(tempEntry);
@@ -31,7 +50,7 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
     return tempEntry;
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const SendRequestToPredictionManagement = () => {
     setSendRequest(true);
