@@ -12,13 +12,12 @@ const ObjectDetection = ({ setCamActivated }) => {
     const savedEntries = JSON.parse(localStorage.getItem("entries")) || [];
     setEntries(savedEntries);
   }, []);
+  
 
   return (
     <section className="flex flex-row w-screen h-screen bg-[#0C0C0C]">
       <div className="flex-[7] h-full">
         <WebcamCapture
-          entry={entry}
-          setEntry={setEntry}
           setEntries={setEntries}
         />
       </div>
