@@ -2,24 +2,20 @@ import { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import DetectedEntryCard from "../Cards/DetectedEntryCard";
 
-
 import TimerComponent from "./TimerComponent";
 import PredictionManagement from "./PredictionManagement";
 
 const WebcamCapture = ({ entry, setEntry, setEntries }) => {
   const webcamRef = useRef(null);
 
-
   const [sendRequest, setSendRequest] = useState(false);
 
   const [predictionsToShow, setPredictionsToShow] = useState([]);
 
-
   const fillNewEntry = (_prediction) => {
     const newEntries = [];
 
-    _prediction.forEach(el => {
-
+    _prediction.forEach((el) => {
       const tempEntry = {
         id: Math.random().toString(36).slice(2, 11),
         objectName: el.class,
@@ -28,26 +24,23 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
       };
 
       newEntries.push(tempEntry);
-    })
+    });
 
     setPredictionsToShow(newEntries);
 
     return tempEntry;
-  }
+  };
 
-  useEffect(() => {
-  }, [])
-
+  useEffect(() => {}, []);
 
   const SendRequestToPredictionManagement = () => {
     setSendRequest(true);
-  }
+  };
 
   const RestartTimer = (_detectionState, _currentPrediction) => {
     setSendRequest(false);
 
     if (_currentPrediction != null) {
-
       switch (_detectionState) {
         case "SAME_DETECTION":
           break;
@@ -59,13 +52,11 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
           break;
       }
     }
-  }
-
+  };
 
   const removePredictionToShow = (id) => {
-    setPredictionsToShow(predictionsToShow.filter(el => el.id != id))
-  }
-
+    setPredictionsToShow(predictionsToShow.filter((el) => el.id != id));
+  };
 
   const captureEntry = () => {
     if (predictions.length === 0) {
@@ -108,9 +99,30 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
         <div className="absolute bottom-[64px] right-[64px] w-[192px] h-[192px] border-b-[8px] border-r-[8px] border-[#00A150]"></div>
       </div>
 
-      {(predictionsToShow != null && predictionsToShow.length) > 0 ? predictionsToShow.map(el => <DetectedEntryCard key={el.id} prediction={el} setEntry={setEntry} removePredictionToShow={removePredictionToShow} />): <></> }
-      <TimerComponent onTimerTriggerReached={SendRequestToPredictionManagement} requestPending={sendRequest} />
-      <PredictionManagement onRequestTreated={RestartTimer} requestAsked={sendRequest} />
+      <div className="absolute flex flex-col gap-[24px] bottom-[96px] w-full px-[96px]">
+        {(predictionsToShow != null && predictionsToShow.length) > 0 ? (
+          predictionsToShow.map((el) => (
+            <DetectedEntryCard
+              key={el.id}
+              prediction={el}
+              setEntry={setEntry}
+              removePredictionToShow={removePredictionToShow}
+            />
+          ))
+        ) : (
+          <></>
+        )}
+        <div className="hidden">
+          <TimerComponent
+            onTimerTriggerReached={SendRequestToPredictionManagement}
+            requestPending={sendRequest}
+          />
+          <PredictionManagement
+            onRequestTreated={RestartTimer}
+            requestAsked={sendRequest}
+          />
+        </div>
+      </div>
 
       <div className="absolute bottom-[96px]">
         {/* <button
@@ -126,9 +138,8 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
         >
           Capture infos
         </button> */}
-
       </div>
-{/* =======
+      {/* =======
 
 
   return (
@@ -140,7 +151,6 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
       <PredictionManagement onRequestTreated={RestartTimer} requestAsked={sendRequest} />
 >>>>>>> testnpm */}
     </div>
-
   );
 };
 
