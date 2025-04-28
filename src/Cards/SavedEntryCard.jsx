@@ -1,7 +1,5 @@
 import React from "react";
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FiTrash2 } from "react-icons/fi";
 
 const SavedEntryCard = ({ entry, deleteEntryFromLocalStorage }) => {
   return (
@@ -17,22 +15,31 @@ const SavedEntryCard = ({ entry, deleteEntryFromLocalStorage }) => {
     //   </button>
     // </div>
 
-    <div className="container flex bg-[#1B1B1B] text-[#888888] border">
+    <div className="container flex bg-[#1B1B1B] text-[#888888] rounded-[16px] overflow-hidden">
       <a href={entry.screenshot} download={`screenshot-${entry.id}.jpg`}>
-        <div className={` border-red img__container bg-cover bg-center w-25 h-25 bg-stone-50`} style={{ backgroundImage: `url(${entry.screenshot})` }}>
-        </div>
+        <div
+          className={`img__container bg-cover bg-center w-[72px] h-full bg-stone-50`}
+          style={{ backgroundImage: `url(${entry.screenshot})` }}
+        ></div>
       </a>
-      <div className=" px-4 ux__container w-[100%] border flex  items-center justify-between">
-        <div className="info__container">
-          <h3 className=" text-center rounded-2xl border-2 px-2 py-1 text-[12px]">{`${(entry.accuracyPercent * 100).toFixed(0)}% accuracy`}</h3>
-          <div className="flex gap-2 items-center justify-evenly">
-            <h3 className="text-[#FFFFFF] text-[20px] font-bold">{entry.objectName}</h3>
-            <h3 className="text-[16px] font-semibold">{entry.id}</h3>
+
+      <div className="ux__container w-[100%] flex  items-center justify-between py-[16px]">
+        <div className="info__container ml-[24px]">
+          <h3 className="text-center rounded-2xl border-1 px-[8px] py-[2px] text-[12px] font-bold w-fit">{`${(
+            entry.accuracyPercent * 100
+          ).toFixed(0)}% accuracy`}</h3>
+          <div className="flex gap-[8px] items-center">
+            <h3 className="text-[#FFFFFF] text-[20px] font-bold">
+              {entry.objectName.charAt(0).toUpperCase() +
+                entry.objectName.slice(1)}{" "}
+            </h3>
+            <h3 className="text-[16px] font-semibold">ID {entry.id}</h3>
           </div>
         </div>
-        <FontAwesomeIcon className="hover:text-[#DB0004]" icon={faTrash} />
+        <div className="group flex justify-center items-center w-[40px] h-[40px] bg-transparent hover:bg-[#2F2F2F] transition mr-[16px] rounded-[8px]">
+          <FiTrash2 className="text-[24px] group-hover:text-[#DB0004] transition cursor-pointer" />
+        </div>
       </div>
-
     </div>
   );
 };

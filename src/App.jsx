@@ -10,6 +10,8 @@ import PageManager from "./Pages/PageManager";
 function App() {
   const [count, setCount] = useState(0);
 
+  console.log(Date.UTC());
+
   return (
     <PageManager />
   );
