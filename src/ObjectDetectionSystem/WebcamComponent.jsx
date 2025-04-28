@@ -10,6 +10,29 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
 
   const [sendRequest, setSendRequest] = useState(false);
 
+  const [predictionsToShow, setPredictionsToShow] = useState([]);
+
+
+  const fillNewEntry = (_prediction) => {
+    const newEntries = [];
+
+    _prediction.forEach(el => {
+
+      const tempEntry = {
+        id: Math.random().toString(36).slice(2, 11),
+        objectName: el.class,
+        accuracyPercent: el.score,
+        screenshot: webcamRef.current.getScreenshot(),
+      };
+
+      newEntries.push(tempEntry);
+    })
+
+    setPredictionsToShow(newEntries);
+
+    return tempEntry;
+  }
+
   useEffect(() => {
   }, [])
 
@@ -18,15 +41,29 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
     setSendRequest(true);
   }
 
-  const RestartTimer = (_detectionState) =>{
-
-    console.log(_detectionState);
+  const RestartTimer = (_detectionState, _currentPrediction) => {
     setSendRequest(false);
+
+    if (_currentPrediction != null) {
+
+      switch (_detectionState) {
+        case "SAME_DETECTION":
+          break;
+        case "OBJECT_ENTERED_DETECTION":
+        case "DIFFERENT_DETECTION":
+          fillNewEntry(_currentPrediction);
+          break;
+        default:
+          break;
+      }
+    }
   }
- 
-  /////////////////////////////////////////////////////////
-  ////// Partie fictive pour faire marcher ma partie //////
-  /////////////////////////////////////////////////////////
+
+
+  const removePredictionToShow = (id) => {
+    setPredictionsToShow(predictionsToShow.filter(el => el.id != id))
+  }
+
   const captureEntry = () => {
     const id = Math.random().toString(36).slice(2, 11);
     const objectName = "Object";
@@ -35,15 +72,13 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
 
     setEntry({ id, objectName, accuracyPercent, screenshot });
   };
-  /////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////
+
 
   return (
     <div>
       <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
       <button onClick={captureEntry}>Capture infos</button>
-      <DetectedEntryCard entry={entry} setEntries={setEntries} />
+      {(predictionsToShow != null && predictionsToShow.length) > 0 ? predictionsToShow.map(el => <DetectedEntryCard key={el.id} prediction={el} removePredictionToShow={removePredictionToShow} />): <></> }
       <TimerComponent onTimerTriggerReached={SendRequestToPredictionManagement} requestPending={sendRequest} />
       <PredictionManagement onRequestTreated={RestartTimer} requestAsked={sendRequest} />
     </div>

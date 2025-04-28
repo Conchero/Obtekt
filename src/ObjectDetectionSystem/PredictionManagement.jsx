@@ -17,23 +17,27 @@ const PredictionManagement = (props) => {
   }, [props.requestAsked])
 
   const getPrediction = async () => {
-    const liveFeed = document.querySelector("video");
-    const model = await cocoSsd.load();
-    const prediction = await model.detect(liveFeed);
+    try {
+      const liveFeed = document.querySelector("video");
+      const model = await cocoSsd.load();
+      const prediction = await model.detect(liveFeed);
 
-    let predictionToReturn = null;
-    if (prediction.length > 0) {
-      const predictionWithoutPerson = prediction.filter((el) => el.class != "person");
-      if (predictionWithoutPerson.length > 0)
-        predictionToReturn = predictionWithoutPerson;
+      let predictionToReturn = null;
+      if (prediction.length > 0) {
+        const predictionWithoutPerson = prediction.filter((el) => el.class != "person");
+        if (predictionWithoutPerson.length > 0)
+          predictionToReturn = predictionWithoutPerson;
+      }
+
+
+      setPreviousPrediction(currentPrediction);
+      setCurrentPrediction(predictionToReturn);
+
+      props.onRequestTreated(getDetectionState(), currentPrediction);
+      return predictionToReturn;
+    } catch (error) {
     }
 
-
-    setPreviousPrediction(currentPrediction);
-    setCurrentPrediction(predictionToReturn);
-
-    props.onRequestTreated(getDetectionState());
-    return predictionToReturn;
   }
 
 
@@ -64,7 +68,7 @@ const PredictionManagement = (props) => {
       }
       state = subState;
     }
-    
+
     return state;
   }
 
