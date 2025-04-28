@@ -5,16 +5,15 @@ import DetectedEntryCard from "../Cards/DetectedEntryCard";
 import TimerComponent from "./TimerComponent";
 import PredictionManagement from "./PredictionManagement";
 
-const WebcamCapture = ({setEntries}) => {
+const WebcamCapture = ({ setEntries }) => {
   const webcamRef = useRef(null);
-
   const [sendRequest, setSendRequest] = useState(false);
-
   const [predictionsToShow, setPredictionsToShow] = useState([]);
 
+
+  //On object Detection
   const fillNewEntry = (_prediction) => {
     const newEntries = [];
-
 
     _prediction.forEach(el => {
 
@@ -27,23 +26,20 @@ const WebcamCapture = ({setEntries}) => {
       // croppedCanvas.height = height;
       // const ctx = croppedCanvas.getContext("2d");
       // ctx.drawImage(canvas, x, y, width, height, 0, 0, width, height);
-
       // const croppedScreenshot = croppedCanvas.toDataURL("image/jpeg")
 
 
+      //Date Turned Into ID
       const date = new Date(Date.now());
+      const yearID = date.getFullYear().toString().charAt(date.getFullYear().toString().length - 2) + date.getFullYear().toString().charAt(date.getFullYear().toString().length - 1);
+      const id = `D-${yearID}-${date.getMonth()}-${date.getHours()}${date.getMinutes()}${date.getSeconds() + date.getMilliseconds()}`;
 
-      const yearID = date.getFullYear().toString().charAt(date.getFullYear().toString().length-2) + date.getFullYear().toString().charAt(date.getFullYear().toString().length-1);
-      const id = `D-${yearID}-${date.getMonth()}-${date.getHours()}${date.getMinutes()}${date.getSeconds()+date.getMilliseconds()}`;
-
-
-      console.log(id)
-
+      //Entry Model
       const tempEntry = {
         id: id,
         objectName: el.class,
         accuracyPercent: el.score,
-        screenshot:  webcamRef.current.getScreenshot(),
+        screenshot: webcamRef.current.getScreenshot(),
       };
 
       newEntries.push(tempEntry);
@@ -54,12 +50,13 @@ const WebcamCapture = ({setEntries}) => {
     return tempEntry;
   };
 
-  useEffect(() => { }, []);
-
+  //On Timer For Detection Reached
   const SendRequestToPredictionManagement = () => {
     setSendRequest(true);
   };
 
+
+  //On Detection ended
   const RestartTimer = (_detectionState, _currentPrediction) => {
     setSendRequest(false);
 
@@ -67,6 +64,7 @@ const WebcamCapture = ({setEntries}) => {
       switch (_detectionState) {
         case "SAME_DETECTION":
           break;
+        //Same behaviour for both
         case "OBJECT_ENTERED_DETECTION":
         case "DIFFERENT_DETECTION":
           fillNewEntry(_currentPrediction);
@@ -75,35 +73,37 @@ const WebcamCapture = ({setEntries}) => {
           break;
       }
     }
+
   };
 
+  //Discard Click
   const removePredictionToShow = (id) => {
     setPredictionsToShow(predictionsToShow.filter((el) => el.id != id));
   };
 
-  const captureEntry = () => {
-    if (predictions.length === 0) {
-      alert("No prediction available");
-      return;
-    }
+  // const captureEntry = () => {
+  //   if (predictions.length === 0) {
+  //     alert("No prediction available");
+  //     return;
+  //   }
 
-    // Récupération de l'image croppée
-    const canvas = webcamRef.current.getCanvas();
-    const firstPrediction = predictions[0]; // Par contre je prends que le premier objet détecté, si y en a plusieurs toz
-    const { bbox, class: objectName, score } = firstPrediction;
-    const [x, y, width, height] = bbox;
-    const croppedCanvas = document.createElement("canvas");
-    croppedCanvas.width = width;
-    croppedCanvas.height = height;
-    const ctx = croppedCanvas.getContext("2d");
-    ctx.drawImage(canvas, x, y, width, height, 0, 0, width, height);
+  //   // Récupération de l'image croppée
+  //   const canvas = webcamRef.current.getCanvas();
+  //   const firstPrediction = predictions[0]; // Par contre je prends que le premier objet détecté, si y en a plusieurs toz
+  //   const { bbox, class: objectName, score } = firstPrediction;
+  //   const [x, y, width, height] = bbox;
+  //   const croppedCanvas = document.createElement("canvas");
+  //   croppedCanvas.width = width;
+  //   croppedCanvas.height = height;
+  //   const ctx = croppedCanvas.getContext("2d");
+  //   ctx.drawImage(canvas, x, y, width, height, 0, 0, width, height);
 
-    const screenshot = croppedCanvas.toDataURL("image/jpeg");
-    const id = Math.random().toString(36).slice(2, 11);
-    const accuracyPercent = `${(score * 100).toFixed()}%`;
+  //   const screenshot = croppedCanvas.toDataURL("image/jpeg");
+  //   const id = Math.random().toString(36).slice(2, 11);
+  //   const accuracyPercent = `${(score * 100).toFixed()}%`;
 
-    setEntry({ id, objectName, accuracyPercent, screenshot });
-  };
+  //   setEntry({ id, objectName, accuracyPercent, screenshot });
+  // };
 
   return (
     <div className="relative flex flex-col h-full items-center">
@@ -146,33 +146,6 @@ const WebcamCapture = ({setEntries}) => {
           />
         </div>
       </div>
-
-      <div className="absolute bottom-[96px]">
-        {/* <button
-          onClick={getPrediction}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition"
-        >
-          Detect Objects
-        </button>
-
-        <button
-          onClick={captureEntry}
-          className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition"
-        >
-          Capture infos
-        </button> */}
-      </div>
-      {/* =======
-
-
-  return (
-    <div>
-      <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
-      <button onClick={captureEntry}>Capture infos</button>
-      {(predictionsToShow != null && predictionsToShow.length) > 0 ? predictionsToShow.map(el => <DetectedEntryCard key={el.id} prediction={el} setEntry={setEntry} removePredictionToShow={removePredictionToShow} />): <></> }
-      <TimerComponent onTimerTriggerReached={SendRequestToPredictionManagement} requestPending={sendRequest} />
-      <PredictionManagement onRequestTreated={RestartTimer} requestAsked={sendRequest} />
->>>>>>> testnpm */}
     </div>
   );
 };

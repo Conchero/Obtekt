@@ -6,6 +6,8 @@ const DetectedEntryCard = ({
   setEntries,
   removePredictionToShow,
 }) => {
+
+  
   const saveEntryToLocalStorage = () => {
     const existingEntries = JSON.parse(localStorage.getItem("entries")) || [];
     const updatedEntries =

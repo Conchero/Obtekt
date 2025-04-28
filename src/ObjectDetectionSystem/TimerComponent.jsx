@@ -1,6 +1,5 @@
 
 import { useRef, useState, useEffect } from "react";
-import PredictionManagement from "./PredictionManagement";
 
 
 const TimerComponent = (props) => {
@@ -16,6 +15,7 @@ const TimerComponent = (props) => {
         startDetectionTimer();
     }, [])
 
+
     const startDetectionTimer = () => {
         setStartTime(Date.now());
         setNow(Date.now());
@@ -29,6 +29,7 @@ const TimerComponent = (props) => {
             detectionTimer = (now - startTime) / 1000;
 
             if (detectionTimer >= detectionTriggerValue) {
+                //Restart from 0
                 startDetectionTimer();
                 props.onTimerTriggerReached();
             }

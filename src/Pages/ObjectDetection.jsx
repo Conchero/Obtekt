@@ -5,14 +5,13 @@ import EntryHeader from "../EntrySystem/EntryHeader";
 import EntryFooter from "../EntrySystem/EntryFooter";
 
 const ObjectDetection = ({ setCamActivated }) => {
-  const [entry, setEntry] = useState();
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
     const savedEntries = JSON.parse(localStorage.getItem("entries")) || [];
     setEntries(savedEntries);
   }, []);
-  
+
 
   return (
     <section className="flex flex-row w-screen h-screen bg-[#0C0C0C]">

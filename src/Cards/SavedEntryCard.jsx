@@ -4,17 +4,6 @@ import { RiDownload2Line } from "react-icons/ri";
 
 const SavedEntryCard = ({ entry, deleteEntryFromLocalStorage }) => {
   return (
-    // <div>
-    //   <a href={entry.screenshot} download={`screenshot-${entry.id}.jpg`}>
-    //     <img src={entry.screenshot} alt="screenshot" />
-    //   </a>
-    //   <div>ID : {entry.id}</div>
-    //   <div>NAME : {entry.objectName}</div>
-    //   <div>ACCURACY : {entry.accuracyPercent}</div>
-    //   <button onClick={() => deleteEntryFromLocalStorage(entry.id)}>
-    //     Delete
-    //   </button>
-    // </div>
 
     <div className="container flex bg-[#1B1B1B] text-[#888888] rounded-[16px] overflow-hidden">
       <a

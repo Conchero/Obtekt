@@ -1,7 +1,7 @@
 import React from "react"
 import { MathBackendCPU } from "@tensorflow/tfjs-backend-cpu";
-import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import { MathBackendWebGL } from "@tensorflow/tfjs-backend-webgl";
+import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import { useEffect } from "react";
 import { useState } from "react";
 
@@ -16,6 +16,8 @@ const PredictionManagement = (props) => {
     }
   }, [props.requestAsked])
 
+
+  //Object Detection
   const getPrediction = async () => {
     try {
       const liveFeed = document.querySelector("video");
@@ -23,6 +25,8 @@ const PredictionManagement = (props) => {
       const prediction = await model.detect(liveFeed);
 
       let predictionToReturn = null;
+
+      //Filter personn class so the presentator won't be recognized
       if (prediction.length > 0) {
         const predictionWithoutPerson = prediction.filter((el) => el.class != "person");
         if (predictionWithoutPerson.length > 0)
@@ -40,7 +44,7 @@ const PredictionManagement = (props) => {
 
   }
 
-
+  //Used for detected card Refresh
   const getDetectionState = () => {
     let state = "";
     if (!currentPrediction && !previousPrediction) {
@@ -68,7 +72,6 @@ const PredictionManagement = (props) => {
       }
       state = subState;
     }
-
     return state;
   }
 
