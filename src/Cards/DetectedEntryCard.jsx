@@ -3,7 +3,7 @@ import { MdInfoOutline, MdCheckCircleOutline } from "react-icons/md";
 
 const DetectedEntryCard = ({
   prediction,
-  setEntry,
+  setEntries,
   removePredictionToShow,
 }) => {
   const saveEntryToLocalStorage = () => {
@@ -14,7 +14,8 @@ const DetectedEntryCard = ({
         : [prediction];
     localStorage.setItem("entries", JSON.stringify(updatedEntries));
     removePredictionToShow(prediction.id);
-    setEntry(prediction);
+
+    setEntries(updatedEntries);
   };
 
   return (

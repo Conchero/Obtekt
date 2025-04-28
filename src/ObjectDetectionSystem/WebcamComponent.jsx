@@ -5,7 +5,7 @@ import DetectedEntryCard from "../Cards/DetectedEntryCard";
 import TimerComponent from "./TimerComponent";
 import PredictionManagement from "./PredictionManagement";
 
-const WebcamCapture = ({ entry, setEntry, setEntries }) => {
+const WebcamCapture = ({setEntries}) => {
   const webcamRef = useRef(null);
 
   const [sendRequest, setSendRequest] = useState(false);
@@ -14,8 +14,6 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
 
   const fillNewEntry = (_prediction) => {
     const newEntries = [];
-
-    //<<<<<<< HEAD
 
 
     _prediction.forEach(el => {
@@ -32,9 +30,6 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
 
       const croppedScreenshot = croppedCanvas.toDataURL("image/jpeg")
 
-      // =======
-      //     _prediction.forEach((el) => {
-      // >>>>>>> d96b867636f938bf191747305be7030ad1612ede
       const tempEntry = {
         id: Math.random().toString(36).slice(2, 11),
         objectName: el.class,
@@ -124,7 +119,7 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
             <DetectedEntryCard
               key={el.id}
               prediction={el}
-              setEntry={setEntry}
+              setEntries={setEntries}
               removePredictionToShow={removePredictionToShow}
             />
           ))
