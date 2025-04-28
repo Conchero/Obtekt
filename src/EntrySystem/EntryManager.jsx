@@ -13,7 +13,7 @@ const EntryManager = ({ entries, setEntries }) => {
   };
 
   return (
-    <div className="mt-6 flex flex-col gap-4">
+    <div className="flex flex-col p-[32px] gap-[16px]">
       {entries.length > 0 ? (
         entries.map((entry, index) => (
           <SavedEntryCard
@@ -23,7 +23,7 @@ const EntryManager = ({ entries, setEntries }) => {
           />
         ))
       ) : (
-        <p className="text-center text-gray-400 mt-4">No entries saved yet.</p>
+        <p className="text-center text-[#888888]">No entries saved yet.</p>
       )}
     </div>
   );

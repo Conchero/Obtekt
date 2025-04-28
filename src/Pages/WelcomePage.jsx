@@ -35,23 +35,26 @@ const WelcomePage = (props) => {
         backgroundPosition: "center",
       }}
     >
-      <div className="relative w-full w-[100vw] h-[100vh] border-64 border-black/50">
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Welcome to <span className="text-green-500">Obtekt</span>
-          </h1>
-          <p className="text-lg md:text-xl text-gray-100 mb-8 max-w-2xl p-6 rounded-lg shadow-lg bg-black/40">
-            Obtekt allows users to recognize objects in real time using their
-            device’s camera. Simply open the app, point the camera at an object,
-            and voilà! ;
-          </p>
+      <div className="relative w-[100vw] h-[100vh] border-[64px] border-black/50">
+        <div className="w-full h-full flex flex-col gap-[72px] items-center justify-center text-center">
+          <div className="flex flex-col gap-[50px] px-[160px]">
+            <h1 className="text-[96px] font-semibold text-white">
+              Welcome to <span className="text-[#00A150]">Obtekt</span>
+            </h1>
+            <p className="text-[32px] text-white">
+              Obtekt allows users to recognize objects in real time using their
+              device’s camera. Simply open the app, point the camera at an
+              object, and voilà! ;)
+            </p>
+          </div>
+
           <button
             onClick={handleActivateWebcam}
-            className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-full transition"
+            className="flex items-center gap-2 bg-[#00A150] hover:bg-white text-white text-semibold text-[24px] hover:text-[#00A150] font-semibold py-[12px] px-[24px] rounded-[16px] cursor-pointer transition"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="h-[32px] w-[32px]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -78,11 +81,8 @@ const WelcomePage = (props) => {
           )}
         </div>
 
-        {/* Decorative Corners */}
-        <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-green-500"></div>
-        <div className="absolute top-0 right-0 w-16 h-16 border-t-4 border-r-4 border-green-500"></div>
-        <div className="absolute bottom-0 left-0 w-16 h-16 border-b-4 border-l-4 border-green-500"></div>
-        <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-green-500"></div>
+        <div className="absolute top-0 right-0 w-[192px] h-[192px] border-t-[8px] border-r-[8px] border-[#00A150]"></div>
+        <div className="absolute bottom-0 left-0 w-[192px] h-[192px] border-b-[8px] border-l-[8px] border-[#00A150]"></div>
       </div>
     </div>
   );
