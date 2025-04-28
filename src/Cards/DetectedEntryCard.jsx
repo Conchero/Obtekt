@@ -1,6 +1,6 @@
 import React from "react";
 
-const DetectedEntryCard = ({prediction, removePredictionToShow}) => {
+const DetectedEntryCard = ({prediction, removePredictionToShow, setEntry}) => {
   
   const saveEntryToLocalStorage = () => {
     const existingEntries = JSON.parse(localStorage.getItem("entries")) || [];
@@ -9,8 +9,10 @@ const DetectedEntryCard = ({prediction, removePredictionToShow}) => {
     console.log(updatedEntries);
     // const updatedEntries = [entry, ...existingEntries];
      localStorage.setItem("entries", JSON.stringify(updatedEntries));
-     removePredictionToShow(prediction.id)
-    // setEntries(updatedEntries);
+     removePredictionToShow(prediction.id);
+    setEntry(prediction);
+
+     //setEntries(updatedEntries);
   };
 
   return (

@@ -78,7 +78,7 @@ const WebcamCapture = ({ entry, setEntry, setEntries }) => {
     <div>
       <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
       <button onClick={captureEntry}>Capture infos</button>
-      {(predictionsToShow != null && predictionsToShow.length) > 0 ? predictionsToShow.map(el => <DetectedEntryCard key={el.id} prediction={el} removePredictionToShow={removePredictionToShow} />): <></> }
+      {(predictionsToShow != null && predictionsToShow.length) > 0 ? predictionsToShow.map(el => <DetectedEntryCard key={el.id} prediction={el} setEntry={setEntry} removePredictionToShow={removePredictionToShow} />): <></> }
       <TimerComponent onTimerTriggerReached={SendRequestToPredictionManagement} requestPending={sendRequest} />
       <PredictionManagement onRequestTreated={RestartTimer} requestAsked={sendRequest} />
     </div>
