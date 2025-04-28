@@ -8,9 +8,7 @@ const PageManager = () => {
     const [camActivated, setCamActivated] = useState(false);
 
 
-    const test = () => {
-        console.log("nsvdjknsqdl");
-    }
+  
 
     if (!camActivated) {
         return <WelcomePage setCamActivated={setCamActivated} />

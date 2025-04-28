@@ -1,51 +1,84 @@
 import React from "react"
+import { MathBackendCPU } from "@tensorflow/tfjs-backend-cpu";
+import * as cocoSsd from "@tensorflow-models/coco-ssd";
+import { MathBackendWebGL } from "@tensorflow/tfjs-backend-webgl";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const PredictionManagement = (props) => {
+
+  const [previousPrediction, setPreviousPrediction] = useState(null);
+  const [currentPrediction, setCurrentPrediction] = useState(null);
+
+  useEffect(() => {
+    if (props.requestAsked) {
+      getPrediction();
+    }
+  }, [props.requestAsked])
+
+  const getPrediction = async () => {
+    try {
+      const liveFeed = document.querySelector("video");
+      const model = await cocoSsd.load();
+      const prediction = await model.detect(liveFeed);
+
+      let predictionToReturn = null;
+      if (prediction.length > 0) {
+        const predictionWithoutPerson = prediction.filter((el) => el.class != "person");
+        if (predictionWithoutPerson.length > 0)
+          predictionToReturn = predictionWithoutPerson;
+      }
+
+
+      setPreviousPrediction(currentPrediction);
+      setCurrentPrediction(predictionToReturn);
+
+      props.onRequestTreated(getDetectionState(), currentPrediction);
+      return predictionToReturn;
+    } catch (error) {
+    }
+
+  }
+
+
+  const getDetectionState = () => {
+    let state = "";
+    if (!currentPrediction && !previousPrediction) {
+      state = "DEFAULT"
+    }
+    else if (currentPrediction && !previousPrediction) {
+      state = "OBJECT_ENTERED_DETECTION"
+    }
+    else if (!currentPrediction && previousPrediction) {
+      state = "OBJECT_LEAVED_DETECTION"
+    }
+    else if (currentPrediction && previousPrediction) {
+      let subState = "";
+      if (currentPrediction.length === previousPrediction.length) {
+        currentPrediction.forEach((el, i) => {
+          if (el.class !== previousPrediction[i].class) {
+            subState = "DIFFERENT_DETECTION";
+            return;
+          }
+          subState = "SAME_DETECTION"
+        })
+      }
+      else {
+        subState = "DIFFERENT_DETECTION";
+      }
+      state = subState;
+    }
+
+    return state;
+  }
+
+
   return (
     <>
-      
+
     </>
   )
 };
 
 export default PredictionManagement;
 
-
-
-// import React from "react";
-// import DetectedEntryCard from "../cards/DetectedEntryCard";
-
-// const PredictionManagement = ({ entry, setEntries }) => {
-//   if (!entry) return null; // S'il n'y a pas de prédiction, on ne montre rien
-
-//   const handleSaveEntry = () => {
-//     const existingEntries = JSON.parse(localStorage.getItem("entries")) || [];
-//     const updatedEntries = [...existingEntries, entry];
-//     localStorage.setItem("entries", JSON.stringify(updatedEntries));
-//     setEntries(updatedEntries);
-//   };
-
-//   return (
-//     <div className="bg-slate-700 p-4 rounded-lg shadow-md">
-//       {/* Titre de la section */}
-//       <h2 className="text-white text-xl font-semibold mb-4">
-//         Detected Prediction
-//       </h2>
-
-//       {/* Carte pour la détection actuelle */}
-//       <DetectedEntryCard entry={entry} />
-
-//       {/* Bouton pour sauvegarder la prédiction */}
-//       <div className="mt-4 flex justify-end">
-//         <button
-//           onClick={handleSaveEntry}
-//           className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full transition"
-//         >
-//           Save Detection
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default PredictionManagement;
