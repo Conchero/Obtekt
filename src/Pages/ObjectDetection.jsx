@@ -6,19 +6,32 @@ import EntryFooter from "../EntrySystem/EntryFooter";
 
 const ObjectDetection = ({ setCamActivated }) => {
   const [entries, setEntries] = useState([]);
+  const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {
     const savedEntries = JSON.parse(localStorage.getItem("entries")) || [];
     setEntries(savedEntries);
   }, []);
 
+  const toggleTheme = () => setDarkMode((prev) => !prev);
 
   return (
-    <section className="flex flex-row w-screen h-screen bg-[#0C0C0C]">
+    <section
+      className={`flex flex-row w-screen h-screen ${
+        darkMode ? "bg-[#0C0C0C]" : "bg-[#F0F0F0]"
+      }`}
+    >
+      <div className="absolute top-4 left-4 z-50">
+        <button
+          onClick={toggleTheme}
+          className="px-4 py-2 rounded bg-gray-700 text-white hover:bg-gray-600"
+        >
+          {darkMode ? "☀️ Mode clair" : "🌙 Mode sombre"}
+        </button>
+      </div>
+
       <div className="flex-[7] h-full">
-        <WebcamCapture
-          setEntries={setEntries}
-        />
+        <WebcamCapture setEntries={setEntries} darkMode={darkMode} />
       </div>
 
       <div className="flex-[3] flex flex-col h-full">
