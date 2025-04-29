@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { MathBackendCPU } from "@tensorflow/tfjs-backend-cpu";
+import { MathBackendWebGL } from "@tensorflow/tfjs-backend-webgl";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 
 const PredictionManagement = ({ requestAsked, onRequestTreated }) => {
