@@ -25,7 +25,7 @@ const WebcamCapture = ({ setEntries, darkMode }) => {
         screenshot: webcamRef.current.getScreenshot(),
       };
 
-      console.log("tempEntry", tempEntry);  
+      console.log("tempEntry", tempEntry);
 
       newEntries.push(tempEntry);
     });
@@ -87,7 +87,8 @@ const WebcamCapture = ({ setEntries, darkMode }) => {
 
   return (
     <div className="relative flex flex-col h-full items-center">
-      <div className="h-full w-full">
+      <div className="absolute w-full h-full border-[64px] border-black/70"></div>
+       <div className="h-full w-full"> 
         <Webcam
           audio={false}
           ref={webcamRef}
@@ -95,11 +96,15 @@ const WebcamCapture = ({ setEntries, darkMode }) => {
           disablePictureInPicture
           className="w-full h-full object-cover"
         />
+        <div className="absolute top-[64px] right-[64px] w-[192px] h-[192px] border-t-[8px] border-r-[8px] border-[#00A150] z-1"></div>
+        <div className="absolute bottom-[64px] left-[64px] w-[192px] h-[192px] border-b-[8px] border-l-[8px] border-[#00A150] z-1"></div>
+        <div className="absolute top-[64px] left-[64px] w-[192px] h-[192px] border-t-[8px] border-l-[8px] border-[#00A150] z-1"></div>
+        <div className="absolute bottom-[64px] right-[64px] w-[192px] h-[192px] border-b-[8px] border-r-[8px] border-[#00A150] z-1" style={{pointerEvents:"none"}}></div>
         <canvas
           ref={canvasRef}
-          className="absolute top-0 left-0 w-full h-full pointer-events-none"
+          className="absolute top-0 left-0 w-full h-full pointer-events-none z-0"
         />
-      </div>
+       </div> 
 
       <div className="absolute flex flex-col gap-[24px] bottom-[96px] w-full px-[96px]">
         {predictionsToShow.map((el) => (
