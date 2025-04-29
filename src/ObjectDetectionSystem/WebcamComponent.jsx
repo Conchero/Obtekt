@@ -13,10 +13,24 @@ const WebcamCapture = ({ setEntries, darkMode }) => {
   const fillNewEntry = (_prediction) => {
     const newEntries = [];
 
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const video = webcamRef.current.video;
+
+    if (!video || !canvas)
+    {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
     _prediction.forEach((el) => {
       const date = new Date(Date.now());
       const yearID = date.getFullYear().toString().slice(-2);
       const id = `D-${yearID}-${date.getMonth()}-${date.getHours()}${date.getMinutes()}${date.getSeconds() + date.getMilliseconds()}`;
+
+      const [x,y,width,height] = el.bbox;
 
       const tempEntry = {
         id: id,
@@ -52,6 +66,7 @@ const WebcamCapture = ({ setEntries, darkMode }) => {
       ctx.strokeRect(x, y, width, height);
       ctx.font = "16px Arial";
       ctx.fillStyle = darkMode ? "#00FF00" : "#2563EB";
+      
       ctx.fillText(prediction.class, x, y > 10 ? y - 5 : 10);
     });
   };
@@ -88,7 +103,7 @@ const WebcamCapture = ({ setEntries, darkMode }) => {
   return (
     <div className="relative flex flex-col h-full items-center">
       <div className="absolute w-full h-full border-[64px] border-black/70"></div>
-       <div className="h-full w-full"> 
+       <div className="h-full w-full "> 
         <Webcam
           audio={false}
           ref={webcamRef}
@@ -101,6 +116,7 @@ const WebcamCapture = ({ setEntries, darkMode }) => {
         <div className="absolute top-[64px] left-[64px] w-[192px] h-[192px] border-t-[8px] border-l-[8px] border-[#00A150] z-1"></div>
         <div className="absolute bottom-[64px] right-[64px] w-[192px] h-[192px] border-b-[8px] border-r-[8px] border-[#00A150] z-1" style={{pointerEvents:"none"}}></div>
         <canvas
+        
           ref={canvasRef}
           className="absolute top-0 left-0 w-full h-full pointer-events-none z-0"
         />
