@@ -13,12 +13,6 @@ const ObjectDetection = ({ setCamActivated }) => {
     setEntries(savedEntries);
   }, []);
 
-// <<<<<<< HEAD
-//   return (
-//     <section className="flex flex-col lg:flex-row w-screen h-screen bg-[#0C0C0C]">
-//       <div className="flex-[7] h-full">
-//         <WebcamCapture setEntries={setEntries} />
-// =======
   const toggleTheme = () => setDarkMode((prev) => !prev);
 
   return (
@@ -38,7 +32,6 @@ const ObjectDetection = ({ setCamActivated }) => {
 
       <div className="flex-[7] h-full">
         <WebcamCapture setEntries={setEntries} darkMode={darkMode} />
-{/* >>>>>>> yasmina */}
       </div>
 
       <div className="flex-[3] flex flex-col h-full">
