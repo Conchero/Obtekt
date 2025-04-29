@@ -36,12 +36,12 @@ const WelcomePage = (props) => {
       }}
     >
       <div className="relative w-[100vw] h-[100vh] border-[64px] border-black/50">
-        <div className="w-full h-full flex flex-col gap-[72px] items-center justify-center text-center">
-          <div className="flex flex-col gap-[50px] px-[160px]">
-            <h1 className="text-[96px] font-semibold text-white">
+        <div className="w-full h-full flex flex-col gap-[32px] lg:gap-[72px] items-center justify-center text-center">
+          <div className="flex flex-col gap-[24px] lg:gap-[50px] px-[64px] lg:px-[160px]">
+            <h1 className="leading-none text-[64px] lg:text-[96px] font-semibold text-white">
               Welcome to <span className="text-[#00A150]">Obtekt</span>
             </h1>
-            <p className="text-[32px] text-white">
+            <p className="text-[20px] lg:text-[32px] text-white">
               Obtekt allows users to recognize objects in real time using their
               device’s camera. Simply open the app, point the camera at an
               object, and voilà! ;)
@@ -50,7 +50,7 @@ const WelcomePage = (props) => {
 
           <button
             onClick={handleActivateWebcam}
-            className="flex items-center gap-2 bg-[#00A150] hover:bg-white text-white text-semibold text-[24px] hover:text-[#00A150] font-semibold py-[12px] px-[24px] rounded-[16px] cursor-pointer transition"
+            className="flex items-center gap-2 bg-[#00A150] hover:bg-white text-white text-semibold text-[20px] lg:text-[24px] hover:text-[#00A150] font-semibold py-[12px] px-[24px] rounded-[16px] cursor-pointer transition"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
