@@ -30,7 +30,7 @@ const WelcomePage = (props) => {
     <div
       className="min-h-screen flex items-center justify-center"
       style={{
-        backgroundImage: "url('/Image/HomePageBackground.png')",
+        backgroundImage: "url('./Image/HomePageBackground.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
