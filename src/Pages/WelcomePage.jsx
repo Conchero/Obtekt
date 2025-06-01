@@ -10,16 +10,28 @@ const WelcomePage = (props) => {
   }, []);
 
   const handleActivateWebcam = async () => {
+
+    if (videoRef.current?.srcObject) {
+      const oldStream = videoRef.current.srcObject;
+      oldStream.getTracks().forEach(track => track.stop());
+      videoRef.current.srcObject = null;
+    }
+
     if (!streaming) {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-        });
-        props.setCamActivated(true);
+
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
-          setStreaming(true);
         }
+        setStreaming(true);
+        props.setCamActivated(true);
+        // const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        // props.setCamActivated(true);
+        // if (videoRef.current) {
+        //   videoRef.current.srcObject = stream;
+        //   setStreaming(true);
+        // }
       } catch (error) {
         console.error("Error accessing webcam:", error);
       }
